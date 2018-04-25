@@ -1,9 +1,10 @@
 TEX  = CMSIS_ru.tex header.tex
-TEX += intro/duction.tex intro/components.tex
+TEX += intro/*.tex
+IMG += intro/*.png
 
 LATEX = pdflatex -halt-on-error -output-directory=tmp
 
-tmp/CMSIS_ru.pdf: $(TEX)
+tmp/CMSIS_ru.pdf: $(TEX) $(IMG)
 	$(LATEX) $< && $(LATEX) $<
 
 .PHONY: release
