@@ -1,0 +1,47 @@
+\pagebreak
+\secrel{ARM::CMSIS Pack}
+
+Пакет ARM::CMSIS содержит следующее:
+
+\bigskip
+\begin{tabular}{l l}
+Файл/Каталог 	& Содержимое \\
+\hline
+ARM.CMSIS.pdsc	& Файл описания пакета в формате CMSIS-Pack \\
+LICENSE.txt	& Лицензионное соглашение CMSIS (Apache 2.0) \\
+CMSIS	& Компоненты CMSIS (см. ниже) \\
+Device	& Референсная реализация CMSIS для устройств на базе процессора
+\cm{\rcirc}\\
+\end{tabular}
+
+\bigskip
+\noindent
+Каталог CMSIS
+
+\bigskip
+\begin{tabular}{l l}
+Каталог 	& Содержимое \\
+\hline
+Documentation	& Эта документация (en) \\
+\verb|Core|	& Шаблоны кода для файлов CMSIS-Core (Cortex-M),
+указанные в ARM.CMSIS.PDSC
+\\
+\verb|Core_A|	& Шаблоны кода для файлов CMSIS-Core (Cortex-A),
+указанные в ARM.CMSIS.PDSC \\
+\verb|DAP|	& CMSIS-DAP Debug Access Port исходный код реализации \\
+\verb|Driver|	& Заголовочные файлы для CMSIS-Driver peripheral interface API \\
+\verb|DSP_Lib|	& исходный код библиотеки CMSIS-DSP \\
+NN	& исходный код библиотеки CMSIS-NN \\
+Include	& Заголовочные файлы для CMSIS-Core (Cortex-M) и CMSIS-DSP \\
+Lib	& CMSIS-DSP сгенерированные библиотеки для ARMCC и GCC
+\\
+Pack	& CMSIS-Pack пример пакета \\
+RTOS	& CMSIS-RTOS версия 1 наряду с эталонной реализацией RTX \\
+RTOS2	& CMSIS-RTOS версия 2 наряду с эталонной реализацией RTX \\
+SVD	& CMSIS-SVD пример \\
+Utilities	& PACK.xsd (файл схемы CMSIS-Pack), PackChk.exe (утилита
+проверки для пакетов),\\&
+CMSIS-SVD.xsd (файл схемы CMSIS-SVD), SVDConv.exe (конвертер для
+файлов SVD)
+\\
+\end{tabular}
