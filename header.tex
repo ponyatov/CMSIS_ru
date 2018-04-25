@@ -1,0 +1,48 @@
+\documentclass[12pt,oneside]{book}
+
+% \usepackage[paperwidth=118.8mm,paperheight=68.2mm,margin=2mm]{geometry}
+\usepackage[paperwidth=210mm,paperheight=148.5mm,margin=5mm]{geometry}
+
+%% hyperlinks pdf style
+\usepackage[unicode,colorlinks=true]{hyperref}
+%% colors
+\usepackage{xcolor}
+\definecolor{red}{rgb}{0.5,0,0}
+\definecolor{green}{rgb}{0,0.3,0}
+\definecolor{blue}{rgb}{0,0,0.7}
+
+% graphics
+\usepackage[pdftex]{graphicx}
+
+% hyphenation and i18n
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+
+% relative sectioning
+\usepackage{ifthen}
+\newcounter{secdepth}\setcounter{secdepth}{0}
+\newcommand{\secup}{\addtocounter{secdepth}{1}}
+\newcommand{\secdown}{\addtocounter{secdepth}{-1}}
+\newcommand{\secrel}[1]{
+\ifthenelse{\equal{\value{secdepth}}{0}}{\part{#1}}{}
+\ifthenelse{\equal{\value{secdepth}}{-1}}{\chapter{#1}}{}
+\ifthenelse{\equal{\value{secdepth}}{-2}}{\section{#1}}{}
+\ifthenelse{\equal{\value{secdepth}}{-3}}{\subsection{#1}}{}
+\ifthenelse{\equal{\value{secdepth}}{-4}}{\subsubsection{#1}}{}
+\ifthenelse{\equal{\value{secdepth}}{-5}}{\paragraph{#1}\ \\}{}
+}
+\newcommand{\secly}[1]{
+\section*{#1}
+\addcontentsline{toc}{subsection}{#1}
+}
+
+% misc
+\newcommand{\email}[1]{$<$\href{mailto:#1}{#1}$>$}
+\newcommand{\note}[1]{\,\footnote{\ #1}}
+\renewcommand{\emph}[1]{\textcolor{blue}{#1}}
+\newcommand{\term}[1]{\textcolor{green}{#1}}
+%% [nosep] option in lists/enums
+\usepackage{enumitem}
+
+\newcommand{\cm}{Cortex®-M}

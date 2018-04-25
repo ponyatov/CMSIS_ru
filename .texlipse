@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Wed Apr 25 09:16:21 SAMT 2018
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=CMSIS_ru.tex
+outputFile=CMSIS_ru.pdf
+langSpell=ru
+markDer=true
+srcDir=
