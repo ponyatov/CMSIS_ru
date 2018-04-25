@@ -2,6 +2,8 @@
 
 % \usepackage[paperwidth=118.8mm,paperheight=68.2mm,margin=2mm]{geometry}
 \usepackage[paperwidth=210mm,paperheight=148.5mm,margin=5mm]{geometry}
+%% font setup for screen reading
+\renewcommand{\familydefault}{\sfdefault}\normalfont
 
 %% hyperlinks pdf style
 \usepackage[unicode,colorlinks=true]{hyperref}
@@ -45,4 +47,8 @@
 %% [nosep] option in lists/enums
 \usepackage{enumitem}
 
-\newcommand{\cm}{Cortex®-M}
+\newcommand{\rcirc}{\textsuperscript{\textregistered}}
+\newcommand{\cm}[1]{Cortex-M#1}
+\newcommand{\ca}[1]{Cortex-A#1}
+
+\newcommand{\pg}{\pagebreak\noindent}

@@ -1,4 +1,5 @@
-TEX = CMSIS_ru.tex header.tex introduction.tex
+TEX  = CMSIS_ru.tex header.tex
+TEX += intro/duction.tex intro/components.tex
 
 LATEX = pdflatex -halt-on-error -output-directory=tmp
 
