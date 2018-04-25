@@ -9,6 +9,6 @@ tmp/CMSIS_ru.pdf: $(TEX)
 .PHONY: release
 NOW = $(shell date +%y%m%d)
 release: CMSIS_ru_$(NOW).pdf
-	git tag -b $(NOW)
+	git tag $(NOW)
 CMSIS_ru_$(NOW).pdf: tmp/CMSIS_ru.pdf
 	cp $< $@ ; echo $@
