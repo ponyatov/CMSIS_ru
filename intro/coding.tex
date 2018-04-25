@@ -1,0 +1,64 @@
+\pagebreak
+\secrel{Правила кодирования}
+
+\noindent
+CMSIS использует следующие обязательные правила кодирования и соглашения:
+\begin{itemize}[nosep]
+  \item 
+Код соответствует стандартам \anC\ (C99) и \cpp\ (C++03)
+  \item 
+Использует стандартные типы данных \anC, определенные в \verb|<stdint.h>|
+  \item 
+Переменные и параметры имеют полный тип данных
+  \item 
+Выражения для \verb|#define| констант заключены в круглые скобки 
+  \item
+Соответствует MISRA 2012 (но не требует его соблюдения). Нарушения правил
+MISRA задокументированы.
+\end{itemize}
+
+\noindent
+Кроме того, CMSIS рекомендует следующие соглашения для идентификаторов:
+
+\begin{itemize}[nosep]
+  \item 
+CAPITAL имена для определения регистров ядра, регистров периферии и команд процессора
+  \item 
+CamelCase имена для определения имен функций и обработчиков прерываний
+  \item 
+\verb|Namespace_| префиксы пространства имен предотвращают конфликты с
+идентификаторами пользователей и предоставляют функциональные группы (например,
+для периферийных устройств, RTOS или библиотеки ЦОС)
+\end{itemize}
+ 
+\noindent
+CMSIS документирован на уровне исходного кода с помощью:
+
+\begin{itemize}[nosep]
+  \item 
+Комментарии в стиле \purec/\cpp. 
+  \item 
+Комментарии для функций в формате Doxygen, которые обеспечивают:
+\begin{itemize}[nosep]
+  \item 
+краткое описание функции
+  \item 
+детальное описание функции
+  \item 
+детальное описание параметров
+  \item 
+детальная информация о возвращаемом значении 
+\end{itemize}
+\end{itemize}
+
+\noindent
+Пример документации Doxygen:
+
+\begin{lstlisting}[language=C]
+/** 
+ * @brief  Enable Interrupt in NVIC Interrupt Controller
+ * @param  IRQn  interrupt number that specifies the interrupt
+ * @return none.
+ * Enable the specified interrupt in the NVIC Interrupt Controller. */
+\end{lstlisting}
+%  * Other settings of the interrupt such as priority are not affected.
