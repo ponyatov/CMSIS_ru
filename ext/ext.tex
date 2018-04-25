@@ -1,0 +1,24 @@
+\pagebreak
+\secrel{Дополнительные материалы}\secdown
+
+В состав проекта перевода включено краткое руководство по применению
+микроконтроллеров на ядре \cm{}\ для разработки ПО для встраиваемых систем
+на Linux с применением GNU compiler toolchain.
+
+\bigskip\noindent
+Также в проект добавлен минимальный набор файлов CMSIS Standart Peripherial
+Library для нескольких распространненных микроконтроллеров и модулей, с которых
+можно начать освоение разработки ПО для \cm{}.
+
+\bigskip
+\begin{tabular}{l l}
+src/ & исходные коды примеров \\
+lib/ & каталог сборки (статических) библиотек \\
+ld/ & скрипты GNU linker \ref{ld} \\
+\end{tabular}
+
+\input{ext/gnu}
+\input{ext/qemu}
+\input{ext/stm32}
+\input{ext/milandr}
+\secup

@@ -2,6 +2,7 @@ TEX  = CMSIS_ru.tex header.tex
 TEX += intro/*.tex
 IMG += intro/*.png
 TEX += core/*.tex
+TEX += ext/*.tex
 
 LATEX = pdflatex -halt-on-error -output-directory=tmp
 
