@@ -3,10 +3,11 @@ TEX += intro/*.tex
 IMG += intro/*.png
 TEX += core/*.tex
 TEX += ext/*.tex
+SRC += ld/*.ld
 
 LATEX = pdflatex -halt-on-error -output-directory=tmp
 
-tmp/CMSIS_ru.pdf: $(TEX) $(IMG)
+tmp/CMSIS_ru.pdf: $(TEX) $(IMG) $(SRC)
 	$(LATEX) $< && $(LATEX) $<
 
 .PHONY: release
