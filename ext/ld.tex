@@ -1,6 +1,180 @@
-\secrel{Скрипты линкера (задание карты памяти МК)}\label{ld}
+\pagebreak
+\secrel{Скрипты линкера (задание карты памяти МК)}\label{ld}\secdown
 
-Все CMSIS/\cm{}\ микроконтроллеры должны использовать этот общий файл:
+Каждая \term{целевая система} имеет собственную карту памяти: отличаются размеры
+Flash/RAM, размеры кучи и стека, адреса ввода/вывода устройств, и особенности
+адресации. Для настройки карты памяти применяются \term{скрипты линкера}.
 
-\lstinputlisting{ld/ANY.ld}
+\secrel{Задание карты памяти целевой системы}
 
+\lstinputlisting{ld/STM32F051R8T6.ld}
+
+\bigskip\noindent
+При линковке для всех CMSIS/\cm{}\ микроконтроллеров должен использоваться этот
+общий файл:
+
+\lstinputlisting[title=ld/ANY.ld]{ld/ANY.ld}
+
+\pagebreak
+\secrel{Секции объектных файлов}
+
+При компиляции \emph{каждого модуля} программы в \term{объектном файле}
+создаются следующие \term{сегменты памяти}:
+
+\begin{lstlisting}
+SECTIONS {
+\end{lstlisting}
+
+\begin{tabular}{l l}
+\verb|.text| & исполняемый машинный код \\
+\verb|.rodata| & константы \\
+\verb|.data| & переменные и массивы с заданными начальными значениями \\
+\verb|.bss| & динамическая памяти и неинициализированные массивы \\
+\verb|.stack| & стек (распределяется загрузчиком или ОС) \\
+\end{tabular}
+
+\bigskip
+\noindent Для микроконтроллеров добавляется \term{таблица векторов
+прерываний}:\bigskip
+
+\begin{tabular}{l l}
+\verb|.isr_vector| & таблица прерываний \\
+\end{tabular}
+
+\bigskip
+\noindent Стандартная библиотека языка \purec\ libc (newlib, uclibc,..)\\ и
+стартовый код который добавляет компилятор (из файлов crt*.o и libgcc)\\
+предполагает наличие кода инициализации и финализации\note{выполняется при
+завершении программы}:\bigskip
+
+\begin{tabular}{l l}
+\verb|.init| &
+\verb|.fini| \\
+\verb|.preinit_array_*| & \\
+\verb|.init_array*| &
+\verb|.fini_array*| \\
+\end{tabular}
+
+
+\bigskip
+\noindent И наконец \cpp\ добавляет \term{статические конструкторы и
+деструкторы}:\bigskip
+
+\begin{tabular}{l l}
+\verb|.ctors| & конструкторы \\
+\verb|.dtors| & деструкторы \\
+\verb|.eh_frame*| & таблицы исключений \\
+\end{tabular}
+
+\secrel{Сборка загрузочного образа в формате ELF}
+
+Утилита программатора требует на входе прошивку\ --- \emph{один}
+\term{объектный файл} в формате ELF, или файл .hex который
+создается из .elf с помощью утилиты \verb|arm-none-eabi-objcopy|.
+
+\begin{lstlisting}
+dpon@dpon:~/acsip/src$ arm-none-eabi-objdump -x hello.elf 
+
+hello.elf:     file format elf32-littlearm
+hello.elf
+architecture: arm, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x200000c1
+
+Program Header:
+    LOAD off    0x00010000 vaddr 0x20000000 paddr 0x20000000 align 2**16
+         filesz 0x000000fc memsz 0x000000fc flags r-x
+private flags = 5000200: [Version5 EABI] [soft-float ABI]
+\end{lstlisting}
+
+\begin{tabular}{l p{.75\textwidth}}
+\verb|elf32| & Executable and Linkable Format 32 bit, для 64-битных архитектур
+есть elf64\\
+\verb|littlearm| & Архитектура ARM \term{little-endian}\\&порядок байт в памяти
+как у x86, \emph{по адресу 32-битного слова лежит младший байт}\\
+&еще бывают big-endian процессоры с сетевым порядком байт (TCP/IP)\\
+\verb|EXEC_P| & исполняемый файл, может быть запущен ОС напрямую или
+прошит программатором\\
+\verb|HAS_SYMS| & содержит \term{таблицу сиволов}: список всех функций и
+переменных\\& с адресами их размещения (относительно начала сегментов)\\
+\end{tabular}
+
+\bigskip \noindent
+Файл прошивки
+должен содержать \emph{определенный набор сегментов}, привязанных на адреса,
+специфичные для конкретного микроконтроллера:\\
+
+\begin{lstlisting}
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .isr_vector   000000c0  20000000  20000000  00010000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .init         00000000  200000c0  200000fc  000100fc  2**0
+                  CONTENTS, ALLOC, LOAD, CODE
+  2 .text         0000003c  200000c0  200000c0  000100c0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data         00000000  200000fc  200000fc  000100fc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          00000000  200000fc  200000fc  00000000  2**0
+                  ALLOC
+  5 .debug_line   000000aa  00000000  00000000  000100fc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000000d0  00000000  00000000  000101a6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000054  00000000  00000000  00010276  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_aranges 00000048  00000000  00000000  000102d0  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 00000030  00000000  00000000  00010318  2**3
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000000f7  00000000  00000000  00010348  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_frame  0000002c  00000000  00000000  00010440  2**2
+                  CONTENTS, READONLY, DEBUGGING
+SYMBOL TABLE:
+...
+\end{lstlisting}
+
+\begin{tabular}{l p{.75\textwidth}}
+\verb|size| & размер сегмента \emph{в байтах} \\
+\verb|VMA| & Virtual Memory Address: адрес, по которому сегмент будет
+размещен в памяти МК\\
+& для STM32: \verb|RAM:0x2000000|, \verb|Flash:0x0B000000| отображен на
+\verb|0x00000000|\\
+\verb|LMA| & Load Memory Address: адрес загрузки (хранения): для некоторых МК
+используется копирование кода из Flash в RAM, поэтому у сегментов с таким кодом
+\verb|VMA->RAM| и \verb|LMA->FLASH|;
+при запуске контроллера стартовый код выполняет копирование кода перед его
+выполнением\\
+\verb|start address| & точка входа программы (указывается для отладчика),
+для микроконтроллера реальной точкой входа является обработчик прерывания
+\verb|Reset_Handler|\\
+\verb|ALLOC| & под сегмент будет выделяться память \\
+\verb|LOAD| & сегмент будет загружаться (из файловой системы или
+программатором)\\
+\verb|CODE| & машинный код \\
+\verb|DATA| & данные \\
+\verb|READONLY| & неизменяемая область памяти \\
+\verb|DEBUGGING| & данные для отладчика \\
+\end{tabular}
+
+\secrel{Линковка для прошивки во Flash}
+
+Для получения прошивки все \term{объектные файлы} и \term{библитеки} нужно
+обработать \term{линкером} \verb|arm-none-eabi-ld| (или \verb|gold|), определить
+какие куски используются программой, или отмечены флагом \verb|KEEP|, и
+\term{слинковать} файл прошивки только из \emph{используемых сегментов}.
+По умолчанию такая оптимизирующая линковка выключена\note{сливаются все
+указанные объектные файлы целиком, из библиотек берутся объектные файлы на
+которые есть ссылки}, для использования LTO\note{Link Time Optimization}\ нужно
+использовать дополнительные опции компилятора и линкера:
+\begin{lstlisting}
+CFLAGS += -ffunction-sections
+LDFLAGS += --gc-collect
+\end{lstlisting}
+
+\secrel{Линковка для отладки в RAM}
+
+\lstinputlisting[title=ld/RAM.ld]{ld/RAM.ld}
+
+\secup

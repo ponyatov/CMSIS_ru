@@ -19,5 +19,5 @@ SECTIONS
 	
 }
 
-INCLUDE ld/ANY_RAM.ld
+INCLUDE ld/RAM.ld
 INCLUDE ld/ANY.ld

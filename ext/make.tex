@@ -17,6 +17,7 @@
 текущему каталогу,\\&типа \verb|/home/user/acsip/lib|\\
 \verb|$(PATH)| & \term{системная переменная}\\&список каталогов, к которых будет
 искаться любая программа,\\&указанная по имени из командной строки или Makefile/скрипта\\
+\verb|TODAY = $(shell date +%y%m%d)| & подставить результат выполнения команды\\
 \end{tabular}
 
 \secrel{/mk.mk общая часть используемая через include}
@@ -24,10 +25,17 @@
 \begin{itemize}[nosep]
   \item \verb|TARGET=arm-none-eabi| \term{триплет} целевой платформы (ARM без
   Linux и libc)
+  \item \verb|TOPDIR=| полный путь каталога проекта: \verb|/home/dpon/CMSIS_ru| 
   \item утилиты GNU toolchain
   \item \verb|CFLAGS +=| флаги для компилятора \purec
+  \begin{itemize}[nosep]
+    \item включение отладочной информации (имена функций, адреса меток,..)
+    \item флаги оптимизации
+    \item каталоги размещения заголовочных файлов и библиотек 
+  \end{itemize}
 \end{itemize}
 
+\pg
 \lstinputlisting{mk.mk}
 
 \secup
