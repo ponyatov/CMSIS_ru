@@ -3,11 +3,9 @@
 
 \begin{tabular}{l l}
 
-\mbox{\fig{ext/AcSIP76.jpg}{}}
-
-&
-
-\bigskip
+\begin{tabular}{l}
+\mbox{\fig{ext/AcSIP76.jpg}{width=.3\textwidth}}\\
+\mbox{
 \begin{tabular}{l l}
 CPU:&STM32L073VZ \\
 Flash ROM:&192K\\
@@ -15,10 +13,17 @@ SRAM:&20K\\
 \hline
 LoRaWAN:&SX1276\\
 \end{tabular}
+}
+\\
+\end{tabular}
+
+& 
+
+\mbox{\fig{ext/AcSIP76_pins.jpg}{width=.65\textwidth}}
 
 \\
 
 \end{tabular}
 
-
+\pg
 \lstinputlisting{ld/STM32L073VZ.ld}
