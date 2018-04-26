@@ -6,4 +6,17 @@
 $ sudo apt install gcc-arm-none-eabi gcc-arm-none-eabi qemu-system-arm git make
 \end{lstlisting}
 
+\secrel{texane: утилита для программатора ST/Link}
+
+\begin{framed}
+\noindent не обновляйте прошивку ST/Link\ --- перестанет работать с
+texane/st-util
+\end{framed}
+
+\begin{lstlisting}
+$ wget -c https://github.com/texane/stlink/archive/1.5.0.tar.gz
+$ tar zx < 1.5.0.tar.gz | cd texane-1.5.0
+$ ./configure [--prefix=/usr/local] && make && sudo make install
+\end{lstlisting}
+
 \secup

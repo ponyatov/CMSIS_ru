@@ -1,0 +1,67 @@
+\clearpage
+\secrel{Отладка и прошивка МК под Linux}\secdown
+
+\secrel{Запуск texane/st-util как gdb-server}
+
+Подключите ST/Link и запустите texane/st-util как \term{gdb-server}\note{для
+прошивки микроконтроллера используется режим \term{удаленной отладки}}:
+\begin{lstlisting}
+dpon@dpon:~/LoRaMac-node$ st-util 
+st-util 1.5.0
+2018-04-26T15:07:54 INFO usb.c: -- exit_dfu_mode
+2018-04-26T15:07:54 INFO common.c: Loading device parameters....
+2018-04-26T15:07:54 INFO common.c: Device connected is: F0 device, id 0x20006440
+2018-04-26T15:07:54 INFO common.c: SRAM size: 0x2000 bytes (8 KiB),
+							Flash: 0x10000 bytes (64 KiB) in pages of 1024 bytes
+2018-04-26T15:07:54 INFO gdb-server.c: Chip ID is 00000440, Core ID is  0bb11477.
+2018-04-26T15:07:54 INFO gdb-server.c: Listening at *:4242...
+\end{lstlisting}
+
+\secrel{Запуск отладчика}
+
+\begin{lstlisting}
+dpon@dpon:~/acsip/src$ arm-none-eabi-gdb -ex "target remote :4242" hello.elf 
+GNU gdb (7.12-6+9+b2) 7.12.0.20161007-git
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "--host=x86_64-linux-gnu --target=arm-none-eabi".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from hello.elf...done.
+Remote debugging using :4242
+0x08000238 in ?? ()
+(gdb) 
+\end{lstlisting}
+
+\secrel{Файл инициализации отладчика .gdb}
+
+При запуске отладчика можно указать файл инициализации, в котором прописать
+команды, выполняемые при старте отладки:
+\lstinputlisting{src/hello.gdb}
+
+\secrel{Графическая оболочка отладчика ddd}
+
+Для удобства можно использовать графическую оболочку ddd:
+
+\begin{lstlisting}{title=Makefile}
+$ ddd --debugger "$(GDB) -x ram.gdb $<"
+\end{lstlisting}
+
+\clearpage
+\fig{ext/ddd.jpg}{height=.45\textheight}
+
+\medskip
+Главная фича ddd: он умеет показывать структуры данных графически:
+\medskip
+
+\fig{ext/ddd.png}{height=.45\textheight}
+
+\secup

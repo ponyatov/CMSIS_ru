@@ -1,0 +1,33 @@
+\pagebreak
+\secrel{Makefile скрипты сборки}\secdown
+
+Проект организован в виде нескольких каталогов, и файлов Makefile: скриптов для
+типовой утилиты \verb|make|.
+
+\noindent
+Чаще всего используются выражения с переменными:
+
+\begin{tabular}{l l}
+\verb|VAR  = value| & задание значения переменной \\
+\verb|VAR ?= value| & задание если переменная ранее не определена \\
+\verb|VAR += value| & добавить значение \\ 
+\verb|PATH = $(CURDIR)/bin:$(PATH)| & \verb|(...)| подстановка значения
+переменной\\
+\verb|$(CURDIR)| & \term{встроенная переменная} GNU make:\\&полный путь к
+текущему каталогу,\\&типа \verb|/home/user/acsip/lib|\\
+\verb|$(PATH)| & \term{системная переменная}\\&список каталогов, к которых будет
+искаться любая программа,\\&указанная по имени из командной строки или Makefile/скрипта\\
+\end{tabular}
+
+\secrel{/mk.mk общая часть используемая через include}
+
+\begin{itemize}[nosep]
+  \item \verb|TARGET=arm-none-eabi| \term{триплет} целевой платформы (ARM без
+  Linux и libc)
+  \item утилиты GNU toolchain
+  \item \verb|CFLAGS +=| флаги для компилятора \purec
+\end{itemize}
+
+\lstinputlisting{mk.mk}
+
+\secup

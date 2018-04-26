@@ -3,7 +3,7 @@ TEX += intro/*.tex
 IMG += intro/*.png
 TEX += core/*.tex
 TEX += ext/*.tex
-SRC += ld/*.ld
+SRC += ld/*.ld src/*.gdb
 
 LATEX = pdflatex -halt-on-error -output-directory=tmp
 
