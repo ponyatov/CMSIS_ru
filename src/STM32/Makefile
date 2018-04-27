@@ -1,3 +1,5 @@
+# CMSIS_ru/src/STM32 files
+
 S += startup_stm32l073xx.s 
 C += system_stm32l0xx.c
 H += $(TOPDIR)/include/STM32/system_stm32l0xx.h
@@ -9,11 +11,14 @@ H += $(TOPDIR)/include/STM32/core_cmInstr.h $(TOPDIR)/include/STM32/core_cmFunc.
 .PHONY: files
 files: $(S) $(C) $(H)
 
-%.s: ./STM32Cube_FW_L0_V1.10.0/Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/gcc/%.s
+CMSIS  = ./STM32Cube_FW_L0_V1.10.0/Drivers/CMSIS
+DEVICE = $(CMSIS)/Device/ST
+
+%.s: $(DEVICE)/STM32L0xx/Source/Templates/gcc/%.s
 	cp $< $@
-%.c: ./STM32Cube_FW_L0_V1.10.0/Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/%.c
+%.c: $(DEVICE)/STM32L0xx/Source/Templates/%.c
 	cp $< $@
-$(TOPDIR)/include/STM32/%.h: ./STM32Cube_FW_L0_V1.10.0/Drivers/CMSIS/Device/ST/STM32L0xx/Include/%.h
+$(TOPDIR)/include/STM32/%.h: $(DEVICE)/STM32L0xx/Include/%.h
 	cp $< $@
-$(TOPDIR)/include/STM32/%.h: ./STM32Cube_FW_L0_V1.10.0/Drivers/CMSIS/Include/%.h
+$(TOPDIR)/include/STM32/%.h: $(CMSIS)/Include/%.h
 	cp $< $@

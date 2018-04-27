@@ -1,9 +1,11 @@
+ELF = hello.elf
+
 include ../mk.mk
 
-LIB = $(TOPDIR)/lib/startup_stm32l073xx.o $(TOPDIR)/lib/system_stm32l0xx.o
+LIB = ../lib/startup_stm32l073xx.o ../lib/libSTM32.a
 
 hello.elf: hello.c $(LIB)
-	$(CC) $(CFLAGS) -Wl,-T,../ld/$(MCU).ld -o $@ $<
+	$(CC) $(CFLAGS) -Wl,-T,../ld/$(MCU).ld -o $@ $< -lSTM32 
 
 $(LIB):
-	cd $(TOPDIR)/lib ; $(MAKE) TOPDIR=$(TOPDIR)
+	cd ../lib ; $(MAKE) TOPDIR=$(TOPDIR)

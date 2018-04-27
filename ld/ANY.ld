@@ -22,7 +22,7 @@ SECTIONS
 		*(.bss*)
 		*(COMMON*)
 		_ebss = . ;
-		__bss_start__ = . ;
+		__bss_end__ = . ;
 		. = ALIGN(8);
 	} > RAM
 	

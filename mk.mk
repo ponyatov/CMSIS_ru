@@ -34,3 +34,19 @@ CFLAGS += -mfloat-abi=soft -mcpu=cortex-m0
 
 # optimization
 LDFLAGS += --gc-collect
+
+## emulator/debugger
+
+QEMU = qemu-system-arm -M lm3s811evb -S -gdb tcp::4242 -kernel
+GDB  = $(TARGET)-gdb
+
+.PHONY: default
+default: $(ELF)
+
+.PHONY: emu
+emu: $(ELF)
+	$(QEMU) $<
+
+.PHONY: deb
+deb: $(ELF)
+	ddd --debugger "$(GDB) -x ram.gdb $<"

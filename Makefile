@@ -1,5 +1,5 @@
 .PHONY: install
-install: stm32files hello
+install: stm32files lib hello
 
 TEX  = CMSIS_ru.tex header.tex
 TEX += intro/*.tex
@@ -26,6 +26,10 @@ install: stm32files
 .PHONY: stm32files
 stm32files:
 	cd src/STM32 ; $(MAKE) TOPDIR=$(CURDIR) 
+
+.PHONY: lib
+lib:
+	cd lib ; $(MAKE) TOPDIR=$(CURDIR) 
 
 .PHONY: hello
 hello:
