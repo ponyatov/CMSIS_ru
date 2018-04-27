@@ -1,3 +1,6 @@
+.PHONY: install
+install: stm32files hello
+
 TEX  = CMSIS_ru.tex header.tex
 TEX += intro/*.tex
 IMG += intro/*.png
@@ -16,3 +19,14 @@ release: CMSIS_ru_$(NOW).pdf
 	git tag $(NOW)
 CMSIS_ru_$(NOW).pdf: tmp/CMSIS_ru.pdf
 	cp $< $@ ; echo $@
+
+.PHONY: install
+install: stm32files
+
+.PHONY: stm32files
+stm32files:
+	cd src/STM32 ; $(MAKE) TOPDIR=$(CURDIR) 
+
+.PHONY: hello
+hello:
+	cd src ; $(MAKE) TOPDIR=$(CURDIR) MCU=STM32L073RZ

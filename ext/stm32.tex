@@ -1,5 +1,20 @@
 \pagebreak
 \secrel{Микроконтроллеры STM32}\secdown
+
+\secrel{STM32L0: \cm{0+}}
+
+Пакет STM Cube для серии STM32L0:  и распаковывается в
+\verb|src/STM32|:\bigskip
+
+\begin{tabular}{l l}
+\verb|src/STM32/en.stm32cubel0.zip| & исходный архив качается с сайта ST Micro\\
+\verb|src/STM32/STM32Cube_FW_L0_V1.10.0| & \\
+\verb|src/STM32/Makefile| & Копирование некоторых файлов, используемых в
+проектах\\
+\hline
+\verb|startup_stm32l073xx.s| & стартовый код и таблица прерываний \\
+\end{tabular}
+
 \input{ext/f0discovery}
 \input{ext/acsip}
 \secup

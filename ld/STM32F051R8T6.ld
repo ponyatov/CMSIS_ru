@@ -1,10 +1,12 @@
 /* CPU: STM32F051R8T6 */
 
+STARTUP(startup_stm32l051xx.o)
+
 MEMORY
 {
 	FLASH	(rx)	: ORIGIN = 0x08000000, LENGTH = 64K
 	RAM		(xrw)	: ORIGIN = 0x20000000, LENGTH =  8K
 }
 
-INCLUDE ld/RAM.ld
-INCLUDE ld/ANY.ld
+INCLUDE ../ld/RAM.ld
+INCLUDE ../ld/ANY.ld

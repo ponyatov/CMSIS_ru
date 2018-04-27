@@ -1,10 +1,12 @@
 /* CPU: STM32L073RZ (AcSIP S76) */
 
+STARTUP(startup_stm32l073xx.o)
+
 MEMORY
 {
 	FLASH	(rx)	: ORIGIN = 0x08000000, LENGTH = 192K
 	RAM		(xrw)	: ORIGIN = 0x20000000, LENGTH =  20K
 }
 
-INCLUDE ld/RAM.ld
-INCLUDE ld/ANY.ld
+INCLUDE ../ld/RAM.ld
+INCLUDE ../ld/ANY.ld

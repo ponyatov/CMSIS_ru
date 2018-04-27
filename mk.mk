@@ -24,6 +24,12 @@ CFLAGS += -I$(TOPDIR)/include
 # libraries
 CFLAGS += -L$(TOPDIR)/lib
 
+## target MCU compiler flags
+#  any Cortex-M
+CFLAGS += -mthumb -D$(MCU) -DSTM32L073xx -DSTM32L0
+# generic Cortex-M0
+CFLAGS += -mfloat-abi=soft -mcpu=cortex-m0
+
 ## linker flags
 
 # optimization
