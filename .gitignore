@@ -2,4 +2,6 @@
 *.swp
 tmp/
 CMSIS_ru_*.pdf
+*.elf.objdump
+*.o.objdump
 
