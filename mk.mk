@@ -37,7 +37,7 @@ LDFLAGS += --gc-collect
 
 ## emulator/debugger
 
-QEMU = qemu-system-arm -M lm3s811evb -S -gdb tcp::4242 -kernel
+QEMU = qemu-system-arm -M lm3s811evb -cpu cortex-m3 -S -gdb tcp::4242 -kernel
 GDB  = $(TARGET)-gdb
 
 .PHONY: default
