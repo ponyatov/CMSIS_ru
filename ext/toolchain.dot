@@ -1,0 +1,28 @@
+digraph {
+rankdir=LR;
+ide [label="(опция) IDE\lEclipse",shape=box];
+debuger [label="debugger\narm-none-eabi-gdb",shape=box];
+ide -> debuger [label="GUI\lcontrol"];
+stlink [label="ST/link",shape=rarrow];
+monitor [label="monitor\ltexane/SWD\lopenocd/JTAG",shape=box];
+debuger -> monitor [label="remote\ldebug"];
+monitor -> stlink [label="USB"];
+stlink -> mcu [label="SWD"]; 
+
+mcu [label="MCU\nSTM32xxx",shape=trapezium];
+
+srcc [label="source.c\lисходный код"];
+compiler [label="compiler\larm-none-eabi-gcc",shape=box];
+srcc -> compiler -> srco;
+srco [label="source.o\lобъектный файл"];
+srco -> linker -> elf -> debuger; 
+elf [label=".elf\lцелевой \"исполняемый\" образ\lобъектный файл\lв формате ELF"];
+ld [label=".ld\lскрипт линкера"];
+linker [label="linker\larm-none-eabi-ld",shape=box];
+ld -> linker [label="задает\lкарту памяти"];
+ide -> srcc [label="edit"];
+
+{ ide; debuger; rank=same; }
+{ linker; compiler; rank=same; }
+
+}

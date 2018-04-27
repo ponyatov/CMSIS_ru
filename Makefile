@@ -1,5 +1,5 @@
-.PHONY: install
-install: stm32files lib hello
+#.PHONY: install
+#install: stm32files lib hello
 
 TEX  = CMSIS_ru.tex header.tex
 TEX += intro/*.tex
@@ -7,6 +7,8 @@ IMG += intro/*.png
 TEX += core/*.tex
 TEX += ext/*.tex
 SRC += ld/*.ld src/*.gdb
+
+IMG += tmp/toolchain.png
 
 LATEX = pdflatex -halt-on-error -output-directory=tmp
 
@@ -19,6 +21,9 @@ release: CMSIS_ru_$(NOW).pdf
 	git tag $(NOW)
 CMSIS_ru_$(NOW).pdf: tmp/CMSIS_ru.pdf
 	cp $< $@ ; echo $@
+	
+tmp/%.png: ext/%.dot Makefile
+	dot -Tpng -Gmargin=0 -o $@ $<
 
 .PHONY: install
 install: stm32files
